@@ -1,6 +1,7 @@
 package com.fiuni.mytube_security.config;
 
 import com.fiuni.mytube_security.exception.CustomAccessDeniedHandler;
+import com.fiuni.mytube_security.exception.CustomAuthenticationEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,8 +35,10 @@ public class SecurityConfig {
     private AuthenticationProvider authProvider;
 
     @Autowired
-    private CustomAccessDeniedHandler accessDeniedHandler; // Asegúrate de inyectar esto
+    private CustomAccessDeniedHandler accessDeniedHandler;
 
+    @Autowired
+    private  CustomAuthenticationEntryPoint authenticationEntryPoint;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
@@ -49,7 +52,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/test2/**").hasRole("Administrator")
                         .anyRequest().authenticated())
                 .exceptionHandling(exceptions -> exceptions
-                        .accessDeniedHandler(accessDeniedHandler)) // Aquí se registra el manejador
+                        .authenticationEntryPoint(authenticationEntryPoint)
+                        .accessDeniedHandler(accessDeniedHandler))
                 .sessionManagement(sessionManager -> sessionManager
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authProvider)
