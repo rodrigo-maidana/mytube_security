@@ -36,7 +36,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/test").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/test").authenticated()
                         .requestMatchers(HttpMethod.PUT, "/api/test").authenticated()
-                        .requestMatchers(HttpMethod.DELETE, "/api/test").hasRole("Administrator") // Cambiar a 'Administrator' si corresponde
+                        .requestMatchers(HttpMethod.DELETE, "/api/test").hasRole("Administrator")
+                        .requestMatchers("/api/test2/**").hasRole("Administrator")
                         .anyRequest().authenticated())
                 .sessionManagement(sessionManager -> sessionManager
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
