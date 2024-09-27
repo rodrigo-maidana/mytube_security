@@ -1,5 +1,6 @@
 package com.fiuni.mytube_security.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,7 +19,8 @@ import com.fiuni.mytube_security.api.dao.user.IUserDao;
 @RequiredArgsConstructor
 public class AuthenticationConfig {
 
-    private final IUserDao userDao;
+    @Autowired
+    private IUserDao userDao;
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
@@ -41,7 +43,7 @@ public class AuthenticationConfig {
     @Bean
     public UserDetailsService userDetailService() {
         return email -> userDao.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not fournd"));
+                .orElseThrow(() -> new UsernameNotFoundException("User not fournd: F"));
     }
 
 }
