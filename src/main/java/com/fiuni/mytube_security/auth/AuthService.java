@@ -8,6 +8,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import lombok.RequiredArgsConstructor;
 import com.fiuni.mytube_security.jwt.JwtService;
@@ -35,12 +36,12 @@ public class AuthService {
                 authenticationManager
                                 .authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(),
                                                 request.getPassword()));
-                UserDetails user = userDao.findByEmail(request.getEmail()).orElseThrow();
+                UserDetails user = userDao.findByEmail(request.getEmail())
+                        .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado con el email: " + request.getEmail()));
                 String token = jwtService.getToken(user);
                 return AuthResponse.builder()
                                 .token(token)
                                 .build();
-
         }
 
         public AuthResponse register(RegisterRequest request) {
