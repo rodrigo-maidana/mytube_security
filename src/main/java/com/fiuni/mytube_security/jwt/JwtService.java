@@ -30,7 +30,7 @@ public class JwtService {
         return getToken(new HashMap<>(), user);
     }
 
-    // Método privado para generar el token JWT
+    // Metodo privado para generar el token JWT
     private String getToken(Map<String, Object> extraClaims, UserDetails user) {
         Map<String, Object> claims = new HashMap<>(extraClaims);
 
