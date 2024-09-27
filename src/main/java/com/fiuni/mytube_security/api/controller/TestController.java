@@ -1,5 +1,6 @@
 package com.fiuni.mytube_security.api.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -24,6 +25,7 @@ public class TestController {
     }
 
     // Metodo DELETE solo para admin
+    @PreAuthorize("hasRole('administrato')")
     @DeleteMapping
     public String deleteExample() {
         return "DELETE: Eliminando un recurso";

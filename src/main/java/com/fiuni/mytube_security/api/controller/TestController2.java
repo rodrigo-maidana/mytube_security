@@ -3,7 +3,7 @@ package com.fiuni.mytube_security.api.controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/test2") //por url
+@RequestMapping("/api/test2") //por url (solo para admin)
 public class TestController2 {
     // Metodo GET
     @GetMapping
