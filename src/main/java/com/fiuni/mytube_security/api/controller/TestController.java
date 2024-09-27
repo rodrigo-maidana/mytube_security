@@ -25,7 +25,7 @@ public class TestController {
     }
 
     // Metodo DELETE solo para admin
-    @PreAuthorize("hasRole('administrato')")
+    @PreAuthorize("hasRole('Administrator')")
     @DeleteMapping
     public String deleteExample() {
         return "DELETE: Eliminando un recurso";

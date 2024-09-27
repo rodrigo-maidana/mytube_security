@@ -23,6 +23,7 @@ public class SecurityConfig {
 
     @Autowired
     private JwtAuthenticationFilter jwtAuthenticationFilter;
+
     @Autowired
     private AuthenticationProvider authProvider;
 
@@ -32,11 +33,10 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authRequest -> authRequest
                         .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers(HttpMethod.GET,"/api/test").permitAll()
-                        .requestMatchers(HttpMethod.POST,"/api/test").authenticated()
-                        .requestMatchers(HttpMethod.PUT,"/api/test").authenticated()
-                        .requestMatchers(HttpMethod.DELETE,"/api/test").hasRole("Administrator")
-                        //.requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/test").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/test").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/api/test").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/api/test").hasRole("Administrator") // Cambiar a 'Administrator' si corresponde
                         .anyRequest().authenticated())
                 .sessionManagement(sessionManager -> sessionManager
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
