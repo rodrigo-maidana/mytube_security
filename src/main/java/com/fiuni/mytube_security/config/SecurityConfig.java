@@ -1,5 +1,6 @@
 package com.fiuni.mytube_security.config;
 
+import com.fiuni.mytube_security.exception.CustomAccessDeniedHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +16,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import lombok.RequiredArgsConstructor;
 import com.fiuni.mytube_security.jwt.JwtAuthenticationFilter;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.beans.factory.annotation.Autowired;
+// Otras importaciones...
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -26,6 +32,9 @@ public class SecurityConfig {
 
     @Autowired
     private AuthenticationProvider authProvider;
+
+    @Autowired
+    private CustomAccessDeniedHandler accessDeniedHandler; // Asegúrate de inyectar esto
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -39,6 +48,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/api/test").hasRole("Administrator")
                         .requestMatchers("/api/test2/**").hasRole("Administrator")
                         .anyRequest().authenticated())
+                .exceptionHandling(exceptions -> exceptions
+                        .accessDeniedHandler(accessDeniedHandler)) // Aquí se registra el manejador
                 .sessionManagement(sessionManager -> sessionManager
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authProvider)
@@ -46,3 +57,4 @@ public class SecurityConfig {
                 .build();
     }
 }
+
