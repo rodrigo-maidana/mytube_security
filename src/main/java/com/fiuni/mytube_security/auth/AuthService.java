@@ -47,7 +47,7 @@ public class AuthService {
         public AuthResponse register(RegisterRequest request) {
                 // Crear el usuario
                 UserDomain user = new UserDomain();
-                user.setUsername(request.getUsername());
+                user.setUsername(request.getEmail());
                 user.setEmail(request.getEmail());
                 user.setPassword(passwordEncoder.encode(request.getPassword()));
                 user.setRole(roleDao.findByName("Regular").orElse(null));
