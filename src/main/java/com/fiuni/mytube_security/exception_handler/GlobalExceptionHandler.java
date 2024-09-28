@@ -1,10 +1,11 @@
-package com.fiuni.mytube_security.exception;
+package com.fiuni.mytube_security.exception_handler;
 
+import com.fiuni.mytube_security.exception_handler.exceptions.BadRequestException;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -54,11 +55,14 @@ public class GlobalExceptionHandler {
         ErrorResponse errorDetails = new ErrorResponse(errorMessage, request.getDescription(false));
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
-    //UsernameNotFoundException: User not fournd
-    public ResponseEntity<ErrorResponse> handleUsernameFoundException(UsernameFoundException ex, WebRequest request) {
+
+    // Manejar UsernameNotFoundException
+    @ExceptionHandler(UsernameNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleUsernameNotFoundException(UsernameNotFoundException ex, WebRequest request) {
         ErrorResponse errorDetails = new ErrorResponse(ex.getMessage(), request.getDescription(false));
         return new ResponseEntity<>(errorDetails, HttpStatus.CONFLICT);
     }
+
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<ErrorResponse> handleAccessDeniedException(AccessDeniedException ex, WebRequest request) {
         ErrorResponse errorDetails = new ErrorResponse("Acceso denegado: " + ex.getMessage(), request.getDescription(false));
@@ -75,4 +79,5 @@ public class GlobalExceptionHandler {
         });
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
+
 }

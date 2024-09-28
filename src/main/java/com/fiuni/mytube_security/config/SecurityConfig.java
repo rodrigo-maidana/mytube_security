@@ -1,7 +1,7 @@
 package com.fiuni.mytube_security.config;
 
-import com.fiuni.mytube_security.exception.CustomAccessDeniedHandler;
-import com.fiuni.mytube_security.exception.CustomAuthenticationEntryPoint;
+import com.fiuni.mytube_security.exception_handler.CustomAccessDeniedHandler;
+import com.fiuni.mytube_security.exception_handler.CustomAuthenticationEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,10 +16,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import lombok.RequiredArgsConstructor;
 import com.fiuni.mytube_security.jwt.JwtAuthenticationFilter;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.beans.factory.annotation.Autowired;
 // Otras importaciones...
 
 @Configuration

@@ -2,6 +2,9 @@ package com.fiuni.mytube_security.auth;
 
 import com.fiuni.mytube.domain.user.UserDomain;
 import com.fiuni.mytube_security.api.dao.user.IRoleDao;
+import com.fiuni.mytube_security.exception_handler.ErrorResponse;
+import com.fiuni.mytube_security.exception_handler.exceptions.BadRequestException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,6 +22,7 @@ import java.util.Date;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AuthService {
 
         @Autowired
@@ -33,15 +37,20 @@ public class AuthService {
         private AuthenticationManager authenticationManager;
 
         public AuthResponse login(LoginRequest request) {
-                authenticationManager
-                                .authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(),
-                                                request.getPassword()));
+                try {
+                        authenticationManager.authenticate(
+                                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
+                        );
+                } catch (Exception e) {
+                        throw new BadRequestException("Email o contraseña incorrectos.", e); // Lanzar excepción personalizada
+                }
+
                 UserDetails user = userDao.findByEmail(request.getEmail())
                         .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado con el email: " + request.getEmail()));
                 String token = jwtService.getToken(user);
                 return AuthResponse.builder()
-                                .token(token)
-                                .build();
+                        .token(token)
+                        .build();
         }
 
         public AuthResponse register(RegisterRequest request) {

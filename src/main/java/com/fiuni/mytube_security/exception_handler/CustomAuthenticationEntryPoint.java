@@ -1,4 +1,4 @@
-package com.fiuni.mytube_security.exception;
+package com.fiuni.mytube_security.exception_handler;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -13,7 +13,9 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) {
         try {
-            response.sendError(HttpStatus.UNAUTHORIZED.value(), "Acceso denegado: Se requiere autenticación.");
+            response.setStatus(HttpStatus.FORBIDDEN.value());
+            response.setContentType("application/json");
+            response.getWriter().write("{\"error\": \"Acceso denegado: No se proporcionó un token válido para acceder a este recurso.\"}");
         } catch (IOException e) {
             e.printStackTrace(); // Manejo simple del IOException
         }

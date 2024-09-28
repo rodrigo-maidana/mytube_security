@@ -1,4 +1,4 @@
-package com.fiuni.mytube_security.exception;
+package com.fiuni.mytube_security.exception_handler;
 
 import lombok.*;
 
@@ -15,5 +15,15 @@ public class ErrorResponse {
         this.message = message;
         this.details = details;
         this.timestamp = new Date();
+    }
+
+    //To String JSON
+    @Override
+    public String toString() {
+        return "{" +
+                "\"message\":\"" + message + '\"' +
+                ", \"details\":\"" + details + '\"' +
+                ", \"timestamp\":\"" + timestamp + '\"' +
+                '}';
     }
 }

@@ -1,4 +1,4 @@
-package com.fiuni.mytube_security.exception;
+package com.fiuni.mytube_security.exception_handler;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
