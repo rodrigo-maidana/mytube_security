@@ -47,6 +47,7 @@ public class AuthService {
 
                 UserDetails user = userDao.findByEmail(request.getEmail())
                         .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado con el email: " + request.getEmail()));
+
                 String token = jwtService.getToken(user);
                 return AuthResponse.builder()
                         .token(token)
