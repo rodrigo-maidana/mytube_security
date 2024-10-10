@@ -31,14 +31,22 @@
         <java.version>17</java.version>
     </properties>
     <dependencies>
-        <!-- MyTube Beans: Dependencia interna de tu proyecto con clases reutilizables -->
+
+        <!-- MyTube Beans: Dependencia interna de tu proyecto con clases reutilizables SERVER-->
+        <dependency>
+            <groupId>com.fiuni.mytube</groupId>
+            <artifactId>mytube-beans</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <!-- MyTube Beans: Dependencia interna de tu proyecto con clases reutilizables LOCAL
         <dependency>
             <groupId>com.fiuni</groupId>
             <artifactId>mytube</artifactId>
             <version>1.0</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/mytube-beans.jar</systemPath>
-        </dependency>
+        </dependency>-->
 
         <!-- JPA and Persistence Dependencies (using Jakarta) -->
         <dependency>
@@ -127,7 +135,25 @@
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
 
+        <!-- Spring Cloud -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+
     </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>2023.0.3</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <plugins>
