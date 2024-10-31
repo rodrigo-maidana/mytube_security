@@ -62,7 +62,7 @@ public class AuthService {
                 user.setPassword(passwordEncoder.encode(request.getPassword()));
                 user.setRole(roleDao.findByName("Regular").orElse(null));
                 user.setDeleted(false);
-                user.setRegistrationDate(new Date());
+                //user.setRegistrationDate(new Date());
 
                 // Guardar el usuario
                 userDao.save(user);
