@@ -41,13 +41,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.disable())
                 .authorizeHttpRequests(authRequest -> authRequest
-                        /*.requestMatchers("/auth/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/test").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/test").authenticated()
-                        .requestMatchers(HttpMethod.PUT, "/api/test").authenticated()
-                        .requestMatchers(HttpMethod.DELETE, "/api/test").hasRole("Administrator")
-                        .requestMatchers("/api/test2/**").hasRole("Administrator")*/
-                        .anyRequest().authenticated())
+                        .requestMatchers("/auth/**").permitAll())
                 .exceptionHandling(exceptions -> exceptions
                         .authenticationEntryPoint(authenticationEntryPoint)
                         .accessDeniedHandler(accessDeniedHandler))
