@@ -1,6 +1,7 @@
 package com.fiuni.mytube_security.auth;
 
 import com.fiuni.mytube.domain.user.UserDomain;
+import com.fiuni.mytube_security.api.dao.user.IProfileDao;
 import com.fiuni.mytube_security.api.dao.user.IRoleDao;
 import com.fiuni.mytube_security.exception_handler.ErrorResponse;
 import com.fiuni.mytube_security.exception_handler.exceptions.BadRequestException;
@@ -12,14 +13,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-
 import lombok.RequiredArgsConstructor;
 import com.fiuni.mytube_security.jwt.JwtService;
-
 import com.fiuni.mytube_security.api.dao.user.IUserDao;
-
+import com.fiuni.mytube.domain.profile.ProfileDomain;
 import java.util.Date;
-
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -35,6 +33,8 @@ public class AuthService {
         private PasswordEncoder passwordEncoder;
         @Autowired
         private AuthenticationManager authenticationManager;
+        @Autowired
+        private IProfileDao profileDao;
 
         public AuthResponse login(LoginRequest request) {
                 try {
@@ -66,6 +66,12 @@ public class AuthService {
 
                 // Guardar el usuario
                 userDao.save(user);
+
+                //crear perfil
+                ProfileDomain profile = new ProfileDomain();
+                profile.setUser(user);
+                profile.setRegistrationDate(new Date());
+                profileDao.save(profile);
 
                 // Crear la respuesta
                 AuthResponse authResponse = new AuthResponse();
