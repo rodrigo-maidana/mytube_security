@@ -140,7 +140,7 @@
     </dependencyManagement>
 
     <build>
-        <finalName>mytube_secutiry</finalName>
+        <finalName>mytube_security</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
